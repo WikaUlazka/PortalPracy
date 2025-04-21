@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Portal Pracy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #0056b3;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .search-section {
+            padding: 30px;
+            text-align: center;
+            background-color: #eef2f7;
+        }
+
+        .search-section input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            margin-right: 10px;
+        }
+
+        .search-section button {
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .jobs {
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .job-listing {
+            background-color: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-left: 5px solid #0056b3;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .job-listing h3 {
+            margin-top: 0;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Portal Pracy</h1>
+</header>
+
+<section class="search-section">
+    <h2>Wyszukaj oferty pracy</h2>
+    <input type="text" placeholder="Stanowisko, firma lub słowo kluczowe">
+    <input type="text" placeholder="Miasto, województwo">
+    <button>Szukaj</button>
+</section>
+
+<section class="jobs">
+    <div class="job-listing">
+        <h3>Frontend Developer</h3>
+        <p><strong>Firma:</strong> WebTech</p>
+        <p><strong>Lokalizacja:</strong> Warszawa</p>
+        <p><strong>Opis:</strong> Poszukujemy frontend developera z doświadczeniem w React.</p>
+    </div>
+
+    <div class="job-listing">
+        <h3>Analityk danych</h3>
+        <p><strong>Firma:</strong> DataWorld</p>
+        <p><strong>Lokalizacja:</strong> Kraków</p>
+        <p><strong>Opis:</strong> Praca przy analizie danych sprzedażowych i raportowaniu.</p>
+    </div>
+</section>
+
+<footer>
+    &copy; 2025 Portal Pracy. Wszelkie prawa zastrzeżone.
+</footer>
+
+</body>
+</html>
