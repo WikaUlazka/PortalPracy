@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj ofertę pracy</title>
+</head>
+<body>
+    <h1>Dodaj ofertę pracy</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Dodaj ofertę</button>
+    </form>
+    <a href="{% url 'home' %}">Powrót do strony głównej</a>
+</body>
+</html>

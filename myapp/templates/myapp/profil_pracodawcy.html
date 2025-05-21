@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil Pracodawcy</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .profile-card { background: #e7f4ff; padding: 20px; border-radius: 10px; width: 400px; }
+        h1 { color: #222; }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <h1>Profil Pracodawcy</h1>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Typ użytkownika:</strong> {{ user.get_typ_uzytkownika_display }}</p>
+
+        <!-- Tu też można dodać pola specyficzne dla pracodawcy -->
+        <!-- <p><strong>Nazwa firmy:</strong> {{ user.nazwa_firmy }}</p> -->
+
+        <hr>
+        <p><a href="{% url 'home' %}">← Powrót do strony głównej</a></p>
+    </div>
+</body>
+</html>

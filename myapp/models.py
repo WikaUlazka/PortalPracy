@@ -1,15 +1,20 @@
 from django.db import models
+from django.utils import timezone
 
 class Uzytkownik(models.Model):
+    TYPY = (
+        ('kandydat', 'Kandydat'),
+        ('pracodawca', 'Pracodawca'),
+    )
+
+    email = models.EmailField(unique=True)
+    haslo = models.CharField(max_length=128)
     imie = models.CharField(max_length=100)
     nazwisko = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
-    haslo = models.CharField(max_length=255)
-    typ_uzytkownika = models.CharField(max_length=50)
+    typ_uzytkownika = models.CharField(max_length=20, choices=TYPY)
 
     def __str__(self):
-        return f"{self.imie} {self.nazwisko} ({self.typ_uzytkownika})"
-
+        return f"{self.email} ({self.typ_uzytkownika})"
 
 class ProfilKandydata(models.Model):
     uzytkownik = models.OneToOneField(Uzytkownik, on_delete=models.CASCADE)
@@ -22,24 +27,30 @@ class ProfilKandydata(models.Model):
 
 
 class ProfilPracodawcy(models.Model):
-    uzytkownik = models.OneToOneField(Uzytkownik, on_delete=models.CASCADE)
+    uzytkownik = models.OneToOneField('Uzytkownik', on_delete=models.CASCADE)
     nazwa_firmy = models.CharField(max_length=100)
     strona_www = models.URLField(blank=True)
     opis = models.TextField()
 
     def __str__(self):
-        return f"{self.nazwa_firmy}"
+        return self.nazwa_firmy
 
 
 class OfertaPracy(models.Model):
     pracodawca = models.ForeignKey(ProfilPracodawcy, on_delete=models.CASCADE)
     tytul = models.CharField(max_length=200)
+    branza = models.CharField(max_length=100)
+    zawod = models.CharField(max_length=100)
+    stanowisko = models.CharField(max_length=100)
     opis = models.TextField()
     lokalizacja = models.CharField(max_length=100)
     wynagrodzenie = models.DecimalField(max_digits=10, decimal_places=2)
-    data_dodania = models.DateField()
+    data_dodania = models.DateField(default=timezone.now)
     data_wygasniecia = models.DateField()
-    status = models.CharField(max_length=50)
+    status = models.CharField(max_length=50, choices=[
+        ('aktywny', 'Aktywny'),
+        ('nieaktywny', 'Nieaktywny'),
+    ])
 
     def __str__(self):
         return self.tytul

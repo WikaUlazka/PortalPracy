@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil Kandydata</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .profile-card { background: #f0f0f0; padding: 20px; border-radius: 10px; width: 400px; }
+        h1 { color: #333; }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <h1>Profil Kandydata</h1>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Typ użytkownika:</strong> {{ user.get_typ_uzytkownika_display }}</p>
+
+        <!-- Możesz dodać więcej pól, np.: -->
+        <!-- <p><strong>Imię:</strong> {{ user.imie }}</p> -->
+        <!-- <p><strong>Telefon:</strong> {{ user.telefon }}</p> -->
+
+        <hr>
+        <p><a href="{% url 'home' %}">← Powrót do strony głównej</a></p>
+    </div>
+</body>
+</html>
