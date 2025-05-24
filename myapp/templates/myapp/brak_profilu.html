@@ -1,2 +1,57 @@
-<h2>Nie znaleziono profilu</h2>
-<p>Skontaktuj się z administratorem.</p>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Brak profilu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .message-box {
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+        }
+
+        h2 {
+            color: #c0392b;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        a {
+            color: #0056b3;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="message-box">
+    <h2>⚠️ Nie znaleziono profilu</h2>
+    <p>Twoje konto nie jest powiązane z żadnym profilem użytkownika.</p>
+    <p>Jeśli to błąd, <a href="mailto:admin@example.com">skontaktuj się z administratorem</a>.</p>
+    <p><a href="{% url 'logout' %}">← Wyloguj się</a></p>
+</div>
+
+</body>
+</html>

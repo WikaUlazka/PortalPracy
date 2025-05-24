@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Moje oferty pracy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 40px;
+            border-left: 6px solid #0056b3;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            flex: 1;
+        }
+
+        h1 {
+            color: #0056b3;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #eef2f7;
+            margin-bottom: 15px;
+            padding: 15px 20px;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+        }
+
+        li:hover {
+            background-color: #d9e6f5;
+        }
+
+        a {
+            color: #0056b3;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.05rem;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .aplikacje {
+            color: #555;
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: auto;
+        }
+
+        .empty {
+            text-align: center;
+            color: #777;
+            font-style: italic;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Moje oferty pracy</h1>
+
+    {% if oferty %}
+    <ul>
+        {% for oferta in oferty %}
+        <li>
+            <a href="{% url 'szczegoly_oferty' oferta.id %}">
+                {{ oferta.stanowisko }} – {{ oferta.branza }}
+            </a>
+            <div class="aplikacje">
+                {% if oferta.liczba_aplikacji > 0 %}
+                📬 Liczba aplikacji: {{ oferta.liczba_aplikacji }}
+                {% else %}
+                ⛔ Brak aplikacji
+                {% endif %}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty">Brak dodanych ofert.</p>
+    {% endif %}
+</div>
+
+<footer>
+    &copy; 2025 Portal Pracy. Wszelkie prawa zastrzeżone.
+</footer>
+</body>
+</html>

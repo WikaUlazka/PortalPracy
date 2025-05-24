@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils import timezone
+
 
 class Uzytkownik(models.Model):
     TYPY = (
@@ -15,6 +15,7 @@ class Uzytkownik(models.Model):
 
     def __str__(self):
         return f"{self.email} ({self.typ_uzytkownika})"
+
 
 class ProfilKandydata(models.Model):
     uzytkownik = models.OneToOneField(Uzytkownik, on_delete=models.CASCADE)
@@ -37,34 +38,54 @@ class ProfilPracodawcy(models.Model):
 
 
 class OfertaPracy(models.Model):
-    pracodawca = models.ForeignKey(ProfilPracodawcy, on_delete=models.CASCADE)
-    tytul = models.CharField(max_length=200)
-    branza = models.CharField(max_length=100)
-    zawod = models.CharField(max_length=100)
-    stanowisko = models.CharField(max_length=100)
+    STANOWISKA = [
+        ('programista', 'Programista'),
+        ('analityk', 'Analityk'),
+        ('sprzedawca', 'Sprzedawca'),
+    ]
+
+    branza = models.CharField(max_length=100, default=None)
+    stanowisko = models.CharField(max_length=50, choices=STANOWISKA, default=None)
     opis = models.TextField()
-    lokalizacja = models.CharField(max_length=100)
-    wynagrodzenie = models.DecimalField(max_digits=10, decimal_places=2)
-    data_dodania = models.DateField(default=timezone.now)
+    lokalizacja = models.CharField(max_length=100, default=None)
+    data_dodania = models.DateField(auto_now_add=True)
     data_wygasniecia = models.DateField()
-    status = models.CharField(max_length=50, choices=[
-        ('aktywny', 'Aktywny'),
-        ('nieaktywny', 'Nieaktywny'),
-    ])
+    status = models.CharField(max_length=20, default='aktywny')
+    pracodawca = models.ForeignKey(ProfilPracodawcy, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.tytul
+        return f"{self.stanowisko} - {self.branza}"
+
+
+class Wymaganie(models.Model):
+    oferta = models.ForeignKey(OfertaPracy, on_delete=models.CASCADE, related_name='wymagania')
+    tresc = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.tresc} ({self.oferta})"
+
+
+class OdpowiedzNaWymaganie(models.Model):
+    wymaganie = models.ForeignKey(Wymaganie, on_delete=models.CASCADE)
+    kandydat = models.ForeignKey(ProfilKandydata, on_delete=models.CASCADE)
+    spelnia = models.BooleanField()
 
 
 class Aplikacja(models.Model):
-    oferta = models.ForeignKey(OfertaPracy, on_delete=models.CASCADE)
     kandydat = models.ForeignKey(ProfilKandydata, on_delete=models.CASCADE)
+    oferta = models.ForeignKey(OfertaPracy, on_delete=models.CASCADE)
     data_aplikacji = models.DateField()
     status = models.CharField(max_length=50)
-    list_motywacyjny_sciezka = models.CharField(max_length=255)
+    list_motywacyjny_sciezka = models.CharField(max_length=255, blank=True)
+
+    # Dodatkowe dane wymagane przez ofertę
+    wiek = models.PositiveIntegerField(null=True, blank=True)
+    wyksztalcenie = models.CharField(max_length=100, blank=True)
+    miejsce_zamieszkania = models.CharField(max_length=100, blank=True)
+    staz = models.PositiveIntegerField(null=True, blank=True)  # staż w latach
 
     def __str__(self):
-        return f"Aplikacja: {self.kandydat} -> {self.oferta}"
+        return f"Aplikacja {self.kandydat} → {self.oferta}"
 
 
 class Kategoria(models.Model):
@@ -90,4 +111,3 @@ class Wiadomosc(models.Model):
 
     def __str__(self):
         return f"Wiadomość od {self.nadawca} do {self.odbiorca} ({self.data_wyslania})"
-

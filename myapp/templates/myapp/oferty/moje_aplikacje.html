@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Moje aplikacje</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #0056b3;
+        }
+
+        .aplikacje-lista {
+            max-width: 800px;
+            margin: 30px auto;
+            list-style: none;
+            padding: 0;
+        }
+
+        .aplikacje-lista li {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 6px solid #0056b3;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+        }
+
+        .aplikacje-lista a {
+            text-decoration: none;
+            color: #0056b3;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .aplikacje-lista small {
+            display: block;
+            margin-top: 8px;
+            color: #666;
+        }
+
+        .status {
+            margin-top: 6px;
+            font-weight: bold;
+        }
+
+        .status.wyslana {
+            color: #888;
+        }
+
+        .status.zaakceptowana {
+            color: green;
+        }
+
+        .status.odrzucona {
+            color: red;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .back-link a {
+            text-decoration: none;
+            color: #0056b3;
+            font-weight: bold;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📨 Moje aplikacje</h1>
+
+<ul class="aplikacje-lista">
+    {% for aplikacja in aplikacje %}
+    <li>
+        <a href="{% url 'szczegoly_oferty' aplikacja.oferta.id %}">
+            {{ aplikacja.oferta.stanowisko }} – {{ aplikacja.oferta.branza }}
+        </a>
+        <small>📅 Wysłano: {{ aplikacja.data_aplikacji|date:"d.m.Y" }}</small>
+        <div class="status {% if aplikacja.status == 'Wysłana' %}wyslana{% elif aplikacja.status == 'Zaakceptowana' %}zaakceptowana{% elif aplikacja.status == 'Odrzucona' %}odrzucona{% endif %}">
+            {% if aplikacja.status == 'Wysłana' %}
+            ⌛ Wysłana – oczekuje na odpowiedź
+            {% elif aplikacja.status == 'Zaakceptowana' %}
+            ✅ Zaakceptowana
+            {% elif aplikacja.status == 'Odrzucona' %}
+            ❌ Odrzucona
+            {% else %}
+            {{ aplikacja.status }}
+            {% endif %}
+        </div>
+    </li>
+    {% empty %}
+    <li class="no-results">Nie masz jeszcze żadnych aplikacji.</li>
+    {% endfor %}
+</ul>
+
+<div class="back-link">
+    <a href="{% url 'user_account' %}">← Powrót do mojego profilu</a>
+</div>
+
+</body>
+</html>
